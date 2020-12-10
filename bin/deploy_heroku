@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+script_path=$(realpath $0)
+bin_path=$(dirname $script_path)
+root_path=$(dirname $bin_path)
+
+echo $root_path
+
+rm -rf "$root_path/sales-funnel-example-page"
+
+heroku git:clone -a sales-funnel-example-page
+
+pushd "$root_path/sales-funnel-example-page"
+  rm -rf build
+  rm -f .gitignore
+  rm -f package.json
+  rm -f yarn.lock
+  rm -f Procfile
+popd
+
+yarn build
+
+cp -a "$root_path/build" "$root_path/sales-funnel-example-page/build"
+cp -a "$root_path/heroku-gitignore" "$root_path/sales-funnel-example-page/.gitignore"
+cp -a "$root_path/heroku-package.json" "$root_path/sales-funnel-example-page/package.json"
+cp -a "$root_path/yarn.lock" "$root_path/sales-funnel-example-page/yarn.lock"
+cp -a "$root_path/Procfile" "$root_path/sales-funnel-example-page/Procfile"
+
+pushd "$root_path/sales-funnel-example-page"
+  git add -A
+  git commit -am "deploy to heroku"
+  heroku git:remote sales-funnel-example-page
+  git push heroku main
+popd

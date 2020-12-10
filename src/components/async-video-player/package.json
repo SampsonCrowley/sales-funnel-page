@@ -1,0 +1,6 @@
+{
+  "name": "AsyncVideoPlayer",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./async-video-player.js"
+}

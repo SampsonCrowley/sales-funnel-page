@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner {
+  max-height: 100%;
+  max-width: 100%;
+  pointer-events: none;
+  animation: loading-spin infinite 20s linear;
+}
+
+@keyframes loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

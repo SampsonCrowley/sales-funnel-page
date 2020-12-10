@@ -1,0 +1,48 @@
+.app {
+  min-height: 100vh;
+}
+@media(min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.contentBlock {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.header p {
+  font-size: .8em;
+}
+
+.header button {
+  /* font-size: 1rem; */
+}
+
+.featureHeader {
+  text-align: center;
+  font-size: calc(1rem + 1.7vmin);
+  font-weight: bold;
+  margin-bottom: calc(1rem + 1.7vmin);
+}
+
+.featureList {
+  margin-bottom: 0;
+}
+
+.featureList dt {
+  font-size: calc(.5rem + 1.1vmin);
+}
+
+.featureList dd {
+  font-size: calc(.5rem + .75vmin);
+}

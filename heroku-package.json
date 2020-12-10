@@ -1,0 +1,14 @@
+{
+  "name": "post-click-sales-funnel",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "15.x"
+  },
+  "dependencies": {
+    "serve": "^11.3.2"
+  },
+  "scripts": {
+    "serve": "serve build"
+  }
+}
