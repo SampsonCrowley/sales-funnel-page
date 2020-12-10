@@ -1,7 +1,8 @@
+/* eslint-disable */
 if(!window.console) window.console = { log: function() {} }
-[
-  "debug",
+
+[ "debug",
   "error",
   "info",
-  "trace"
-].map(k => { if(!console[k]) console[k] = console.log })
+  "trace" ].map(k => { if(!console[k]) console[k] = console.log }) //eslint-disable-line
+/* eslint-enable */
