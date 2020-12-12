@@ -8,7 +8,6 @@ export class AsyncVideoPlayer extends PureComponent {
   async componentDidMount() {
     if(!Player) {
       Player = (await import("react-player")).default
-      console.debug(Player)
       this.forceUpdate()
     }
   }

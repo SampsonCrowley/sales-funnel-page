@@ -3,12 +3,16 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { App } from "./App";
+import { ExecutionContextProvider } from "contexts/execution"
+
 import reportWebVitals from "./reportWebVitals";
 
 const root = document.getElementById("root"),
       initialMarkup = () => (
         <StrictMode>
-          <App />
+          <ExecutionContextProvider>
+            <App />
+          </ExecutionContextProvider>
         </StrictMode>
       )
 

@@ -117,7 +117,6 @@ export class TextField extends PureComponent {
 
       try {
         if(str && caretStr) {
-          console.log(caretStr)
           let regex = new RegExp(caretStr, 'g'),
               splitReg = new RegExp(str.replace(regex, '').split('').map((v) => v.replace(/\+/, '\\+')).join(`(${caretStr})?`)),
               matches = str.match(regex) || [],
@@ -152,7 +151,7 @@ export class TextField extends PureComponent {
       func(el)
       if(needsChange) el.type = ogType
     } catch(err) {
-      console.log(err)
+      console.error(err)
 
       el.type = this.props.type || 'text'
     }

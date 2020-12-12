@@ -1,0 +1,6 @@
+{
+  "name": "LoadingDots",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./loading-dots.js"
+}

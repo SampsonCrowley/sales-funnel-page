@@ -1,15 +1,20 @@
-import { useRef } from "react"
+import { useRef, useContext } from "react"
 import styles from './App.module.css';
 import { AsyncVideoPlayer } from "components/async-video-player"
+import { LoadingDots } from "components/loading-dots"
 import { SignupForm } from "components/signup-form"
+import { ExecutionContext } from "contexts/execution"
 
 export function App() {
-  const formWrapper = useRef(null)
+  const formWrapper = useRef(null),
+        { isClient } = useContext(ExecutionContext);
+
   function scrollToForm(ev) {
     ev.preventDefault()
     ev.stopPropagation()
     if(formWrapper.current) formWrapper.current.scrollIntoView({ block: "start", inline: "start", behavior: "smooth" })
   }
+
   return (
     <section className={styles.app}>
       <header className={`${styles.contentBlock} ${styles.header} bg-secondary py-5 text-white`}>
@@ -28,7 +33,7 @@ export function App() {
                 </div>
                 <div className="d-flex flex-column align-items-center">
                   <div>
-                    <button onClick={scrollToForm} className="btn d-block btn-lg btn-info">
+                    <button onClick={scrollToForm} className="btn d-block btn-lg btn-info" disabled={!isClient}>
                       Button Text for Scrolling to Form
                     </button>
                   </div>
@@ -141,6 +146,15 @@ export function App() {
           </div>
         </div>
       </div>
+      {
+        !isClient && (
+          <div className={styles.loadingWrapper}>
+            <div className={styles.loadingInner}>
+              <LoadingDots />
+            </div>
+          </div>
+        )
+      }
     </section>
   );
 }

@@ -1,7 +1,10 @@
 import { PureComponent } from "react"
 import { TextField } from "./text-field"
+import { ExecutionContext } from "contexts/execution"
 
 export class SignupForm extends PureComponent {
+  static contextType = ExecutionContext
+
   constructor(props) {
     super(props)
     this.state = { full_name: "", email: "", phone: "" }
@@ -21,6 +24,8 @@ export class SignupForm extends PureComponent {
   genId = (id) => `${this.idPrefix}_${id}`
 
   render() {
+    const { isClient } = this.context || {}
+
     return (
       <form className="row" action="">
         <div className="col-6 mb-3">
@@ -36,6 +41,7 @@ export class SignupForm extends PureComponent {
             onChange={this.onTextFieldChange}
             useEmailFormat
             required
+            disabled={!isClient}
           />
         </div>
         <div className="col-6 mb-3">
@@ -51,6 +57,7 @@ export class SignupForm extends PureComponent {
             onChange={this.onTextFieldChange}
             useEmailFormat
             required
+            disabled={!isClient}
           />
         </div>
         <div className="col-6 mb-3">
@@ -67,6 +74,7 @@ export class SignupForm extends PureComponent {
             onChange={this.onTextFieldChange}
             usePhoneFormat
             required
+            disabled={!isClient}
           />
         </div>
         <div className="col-6 mb-3">
@@ -83,6 +91,7 @@ export class SignupForm extends PureComponent {
             onChange={this.onTextFieldChange}
             useCurrencyFormat
             required
+            disabled={!isClient}
           />
         </div>
       </form>
