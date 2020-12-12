@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+
 import {
   emailPattern,
   emailRegex,
@@ -235,14 +235,16 @@ export class TextField extends PureComponent {
       />
     )
 
-    return skipExtras ? input : (
-      <>
-        <label key={`${id}.label`} htmlFor={id}>{label}</label>
-        { input }
-        <small key={`${id}.feedback`} className="form-control-focused">
-          {feedback}
-        </small>
-      </>
-    )
+    return skipExtras
+      ? input
+      : (
+          <>
+            <label key={`${id}.label`} htmlFor={id}>{label}</label>
+            { input }
+            <small key={`${id}.feedback`} className="form-control-focused">
+              {feedback}
+            </small>
+          </>
+        )
   }
 }

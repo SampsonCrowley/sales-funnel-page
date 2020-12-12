@@ -1,6 +1,4 @@
-const emailPattern = '(^$|^[^@\\s;.\\/\\[\\]\\\\]+(\\.[^@\\s;.\\/\\[\\]\\\\]+)*@[^@\\s;.\\/\\[\\]\\\\]+(\\.[^@\\s;.\\/\\[\\]\\\\]+)*\\.[^@\\s;.\\/\\[\\]\\\\]+$)',
-      emailRegex = new RegExp(emailPattern),
-      phonePattern = '(^$|^04[0-9]{2}\\s*[0-9]{3}\\s*[0-9]{3}|^[2-9][0-9]{2}-?[0-9]{3}-?[0-9]{4}|\\+.{11,})',
+const phonePattern = '(^$|^04[0-9]{2}\\s*[0-9]{3}\\s*[0-9]{3}|^[2-9][0-9]{2}-?[0-9]{3}-?[0-9]{4}|\\+.{11,})',
       phoneRegex = new RegExp(phonePattern),
       phoneFormat = (val, ctx) => {
 
@@ -43,28 +41,6 @@ const emailPattern = '(^$|^[^@\\s;.\\/\\[\\]\\\\]+(\\.[^@\\s;.\\/\\[\\]\\\\]+)*@
           }
         }
         return val
-      },
-      currencyPattern = '^[0-9]+((\\.[0-9]{2})$|$)',
-      currencyRegex = new RegExp(currencyPattern),
-      currencyFormat = (val) => {
-        val = `${val}`.replace(/[^0-9.]/g, '')
-        if(/\./.test(val)) {
-          val = val.split('.')
-          val[1] = `${val[1]}00`.slice(0, 2)
-          val = `${val[0] || '0'}.${val[1]}`
-        } else {
-          val = (val || '0') + '.00'
-        }
-        return val
       }
 
-export {
-  emailPattern,
-  emailRegex,
-  phonePattern,
-  phoneRegex,
-  phoneFormat,
-  currencyPattern,
-  currencyRegex,
-  currencyFormat,
-}
+export { phoneFormat, phonePattern, phoneRegex }
