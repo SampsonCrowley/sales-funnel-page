@@ -5,7 +5,7 @@ const phonePattern = '(^$|^04[0-9]{2}\\s*[0-9]{3}\\s*[0-9]{3}|^[2-9][0-9]{2}-?[0
         if(/^\+([^1]|$)/.test(val)) {
           val = val.replace(/[^+0-9]/g, '')
         } else {
-          val = val.replace(/[^0-9]/g, '')
+          val = val.replace(/^\+?1|[^0-9]/g, '')
         }
 
 
