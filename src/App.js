@@ -11,6 +11,7 @@ export function App() {
   const formWrapper = useRef(null),
         { isClient } = useContext(ExecutionContext),
         [ calendlyEvent, setCalendlyEvent ] = useState({}),
+        [ schedulingEvent, setSchedulingEvent ] = useState(false),
         urlParams = new URLSearchParams(window.location.search),
         header = urlParams.get('header'),
         subHeader = urlParams.get('sub-header'),
@@ -21,10 +22,23 @@ export function App() {
     ev.preventDefault()
     ev.stopPropagation()
     if(formWrapper.current) formWrapper.current.scrollIntoView({ block: "start", inline: "start", behavior: "smooth" })
+    setSchedulingEvent(true)
   }
 
   function calendlyEventHandler(ev) {
     setCalendlyEvent(ev.data)
+  }
+
+  function scheduleCompleted(ev) {
+    ev && ev.preventDefault()
+
+    setSchedulingEvent(false)
+  }
+
+  function scheduleEvent(ev) {
+    ev && ev.preventDefault()
+
+    setSchedulingEvent(true)
   }
 
   return (
@@ -61,7 +75,7 @@ export function App() {
               !!underText && (
                 <p className="text-center pt-2">
                   <i>
-                    Starting from $4/month
+                    { underText }
                   </i>
                 </p>
               )
@@ -69,36 +83,35 @@ export function App() {
           </div>
         </div>
 
-        <div className={`${styles.contentBlock} mb-5`}>
+        <div ref={formWrapper} class="card bg-dark text-light mb-5">
           <AsyncVideoPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
         </div>
 
-        <div className={`${styles.contentBlock} mb-5`}>
-          <div className="container-fluid">
+        <div ref={formWrapper} class="card bg-dark text-light mb-5">
+          <div class="card-body">
+            <h5 class="card-title">Schedule a Meeting!</h5>
             <CalendlyEventListener
               onDateAndTimeSelected={calendlyEventHandler}
               onEventScheduled={calendlyEventHandler}
               onEventTypeViewed={calendlyEventHandler}
               onProfilePageViewed={calendlyEventHandler}
             >
-              <div ref={formWrapper} className="row-full">
-                <iframe
-                  title="MoneyDolly Calender Reservations"
-                  frameBorder="0"
-                  width="100%"
-                  height={calendlyEvent.event === "calendly.event_type_viewed" ? "1500px" : "1000px"}
-                  scrolling="no"
-                  src={`https://calendly.com/moneydolly?embed_domain=${document.location.host}&embed_type=Inline`}
-                />
-              </div>
+              <iframe
+                title="MoneyDolly Calender Reservations"
+                frameBorder="0"
+                width="100%"
+                height={"800"}
+                scrolling="no"
+                src={`https://calendly.com/moneydolly?embed_domain=${document.location.host}&embed_type=PopupWidget`}
+              />
             </CalendlyEventListener>
           </div>
         </div>
 
-        <div className={`${styles.contentBlock} py-5 mb-5`}>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
+        <div className="row mb-5">
+          <div className="col">
+            <div class="card bg-dark text-light mb-5">
+              <div className="card-body">
                 Calendly Events: { JSON.stringify(calendlyEvent) }
               </div>
             </div>
