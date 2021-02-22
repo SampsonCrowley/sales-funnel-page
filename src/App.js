@@ -6,12 +6,15 @@ import { LoadingDots } from "components/loading-dots"
 import { ExecutionContext } from "contexts/execution"
 import { CalendlyEventListener } from "react-calendly"
 import logo from "images/logos/logo-cropped.jpg"
+import iphone from "images/money-dolley-iphone.png"
 
 export function App() {
   const formWrapper = useRef(null),
         { isClient } = useContext(ExecutionContext),
         [ calendlyEvent, setCalendlyEvent ] = useState({}),
         [ schedulingEvent, setSchedulingEvent ] = useState(false),
+        [ showCalendar, setShowCalender ] = useState(false),
+        isProduction = process.env.NODE_ENV === "production",
         urlParams = new URLSearchParams(window.location.search),
         header = urlParams.get('header'),
         subHeader = urlParams.get('sub-header'),
@@ -41,83 +44,96 @@ export function App() {
     setSchedulingEvent(true)
   }
 
+  function openCalendarModal(ev) {
+    ev && ev.preventDefault()
+
+    setShowCalender(true)
+  }
+
+  function closeCalendar(ev) {
+    ev && ev.preventDefault()
+
+    setShowCalender(false)
+  }
+
   return (
-    <section className={styles.app}>
-      <header className={`${styles.topHeader} mb-5`}>
-        <img src={logo} alt="MoneyDolly" className={styles.topHeaderLogo} />
-      </header>
-      <div className="container pb-5">
-        <div className={`${styles.header} mb-5`}>
-          <div className="d-flex flex-column align-items-center mb-3">
-            <h2>
-              {
-                header
-                || "Attention-Grabbing Sales Funnel Headline"
-              }
-            </h2>
-            <p>
-              {
-                subHeader
-                || "More detailed explanation of what is happending and why they should continue. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              }
-            </p>
-          </div>
-          <div className="d-flex flex-column align-items-center">
-            {
-              !!button && (
-                <button onClick={scrollToForm} className="btn d-block btn-lg btn-info" disabled={!isClient}>
-                  { button }
-                </button>
-              )
-            }
-
-            {
-              !!underText && (
-                <p className="text-center pt-2">
-                  <i>
-                    { underText }
-                  </i>
-                </p>
-              )
-            }
-          </div>
-        </div>
-
-        <div ref={formWrapper} class="card bg-dark text-light mb-5">
-          <AsyncVideoPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
-        </div>
-
-        <div ref={formWrapper} class="card bg-dark text-light mb-5">
-          <div class="card-body">
-            <h5 class="card-title">Schedule a Meeting!</h5>
-            <CalendlyEventListener
-              onDateAndTimeSelected={calendlyEventHandler}
-              onEventScheduled={calendlyEventHandler}
-              onEventTypeViewed={calendlyEventHandler}
-              onProfilePageViewed={calendlyEventHandler}
-            >
-              <iframe
-                title="MoneyDolly Calender Reservations"
-                frameBorder="0"
-                width="100%"
-                height={"800"}
-                scrolling="no"
-                src={`https://calendly.com/moneydolly?embed_domain=${document.location.host}&embed_type=PopupWidget`}
-              />
-            </CalendlyEventListener>
-          </div>
-        </div>
-
-        <div className="row mb-5">
-          <div className="col">
-            <div class="card bg-dark text-light mb-5">
-              <div className="card-body">
-                Calendly Events: { JSON.stringify(calendlyEvent) }
+    <section
+      className={`${styles.app} ${showCalendar ? "modal-open" : ""}`}
+      onClick={showCalendar ? closeCalendar : undefined}
+    >
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-5 col-lg">
+            <header className={`${styles.topHeader} mb-5`}>
+              <img src={logo} alt="MoneyDolly" className={styles.topHeaderLogo} />
+            </header>
+            <div className={styles.largeLeftPad}>
+              <h5 className={styles.easyHeader}>
+                FUNDRAISING
+                <br/>
+                MADE
+                <br/>
+                EASY
+              </h5>
+              <p className={styles.description}>
+                Covid concerns? No problem! Click below to schedule a no risk,
+                no pressure 10-minute call with Money Dolly, and see how easy
+                fundraising has just become.
+              </p>
+              <div className="row">
+                <div className="col d-flex justify-content-start mb-5">
+                  <button
+                    className={styles.scheduleBtn}
+                    onClick={openCalendarModal}
+                  >
+                    Schedule a Call
+                  </button>
+                </div>
               </div>
+
+            </div>
+          </div>
+          <div className="col d-flex align-items-end justify-content-end">
+            <img className="img-fluid" src={iphone} alt="Get Help from Money Dolley"/>
+          </div>
+        </div>
+      </div>
+      <div class={`modal ${showCalendar ? "d-block" : "d-none"}`} tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div ref={formWrapper} className="card mb-5">
+              <CalendlyEventListener
+                onDateAndTimeSelected={calendlyEventHandler}
+                onEventScheduled={calendlyEventHandler}
+                onEventTypeViewed={calendlyEventHandler}
+                onProfilePageViewed={calendlyEventHandler}
+              >
+                <iframe
+                  title="MoneyDolly Calender Reservations"
+                  frameBorder="0"
+                  width="100%"
+                  height={"300"}
+                  scrolling="no"
+                  src={`https://calendly.com/moneydolly?embed_domain=${document.location.host}&embed_type=PopupWidget`}
+                />
+              </CalendlyEventListener>
             </div>
           </div>
         </div>
       </div>
+      {
+        (!isProduction && false) && (
+          <div className="row mb-5">
+            <div className="col">
+              <div className="card bg-dark text-light mb-5">
+                <div className="card-body">
+                  Calendly Events: { JSON.stringify(calendlyEvent) }
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
       {
         !isClient && (
           <div className={styles.loadingWrapper}>
@@ -125,6 +141,11 @@ export function App() {
               <LoadingDots />
             </div>
           </div>
+        )
+      }
+      {
+        showCalendar && (
+          <div className="modal-backdrop fade show"></div>
         )
       }
     </section>

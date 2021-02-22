@@ -1,6 +1,30 @@
+@font-face {
+  font-family: "Kr Noto Sans";
+  src: url("~fonts/kr-noto-sans/NotoSansKR-Thin.otf") format("opentype");
+      /* url("~fonts/kr-noto-sans/NotoSansKR-Black.otf") format("opentype"),
+      url("~fonts/kr-noto-sans/NotoSansKR-Bold.otf") format("opentype"),
+      url("~fonts/kr-noto-sans/NotoSansKR-Light.otf") format("opentype"),
+      url("~fonts/kr-noto-sans/NotoSansKR-Medium.otf") format("opentype"),
+      url("~fonts/kr-noto-sans/NotoSansKR-Regular.otf") format("opentype"), */
+}
+
 .app {
-  min-height: 100vh;
-  background-color: #90EE90;
+  height: 100vh;
+  background-color: #FFFFFF;
+  font-family: "Kr Noto Sans", sans-serif;
+}
+
+.app * {
+  font-family: "Kr Noto Sans", sans-serif;
+}
+
+.app > div {
+  height: 100%;
+  overflow: auto;
+}
+
+.app > div > div {
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -10,10 +34,10 @@
 }
 
 .topHeader {
-  height: 4rem;
+  height: 25vmin;
   background: #FFF;
   width: 100%;
-  box-shadow: 0 0.3rem 0 0 rgba(0, 0, 0, 7%);
+  /* box-shadow: 0 0.3rem 0 0 rgba(0, 0, 0, 7%); */
 }
 
 .topHeader img.topHeaderLogo {
@@ -68,4 +92,54 @@
 
 .featureList dd {
   font-size: calc(.5rem + .75vmin);
+}
+
+.largeLeftPad {
+  padding-left: 10vw;
+}
+
+.easyHeader {
+  font-size: 1.75rem;
+  line-height: 2;
+  font-weight: normal;
+  margin-bottom: 3rem;
+}
+
+.scheduleBtn {
+  font-size: 7.5vw;
+  background: #388E3C;
+  color: white;
+  border-radius: 4rem;
+  padding: 1rem 2rem;
+  font-weight: normal;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .scheduleBtn {
+    font-size: 3vw;
+    background: #388E3C;
+    color: white;
+    border-radius: 4rem;
+    padding: 1rem 2rem;
+    font-weight: normal;
+    border: none;
+  }
+}
+
+@media (min-width: 998px) {
+  .scheduleBtn {
+    font-size: 2rem;
+    background: #388E3C;
+    color: white;
+    border-radius: 4rem;
+    padding: 1rem 2rem;
+    font-weight: normal;
+    border: none;
+  }
+}
+
+.description {
+  font-weight: lighter;
+  margin-bottom: 5rem;
 }
