@@ -29,3 +29,8 @@ code {
   margin-right: calc(var(--bs-gutter-x)/ -2);
   margin-left: calc(var(--bs-gutter-x)/ -2);
 }
+
+.modal-fullscreen {
+  max-width: 1140px;
+  margin: auto;
+}
