@@ -19,6 +19,7 @@ pushd "$root_path/sales-funnel-example-page"
 popd
 
 yarn build
+yarn build:html
 
 cp -a "$root_path/build" "$root_path/sales-funnel-example-page/build"
 cp -a "$root_path/heroku-gitignore" "$root_path/sales-funnel-example-page/.gitignore"

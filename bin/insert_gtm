@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+const FS = require("fs")
+const PATH = require("path")
+
+const rootPath = PATH.join(__dirname, "../")
+const buildPath = PATH.join(rootPath, "build")
+const gtmPath = PATH.join(buildPath, "gtm.js")
+
+let gtmString = ""
+
+async function getGTMCode() {
+  let filehandle
+  if(gtmString) return gtmString
+
+  try {
+    filehandle = await FS.promises.open(gtmPath, "r")
+    const code = await filehandle.readFile("utf8")
+    gtmString = `<!-- Google Tag Manager --><script>${code}</script><!-- End Google Tag Manager -->`
+  } finally {
+    if(filehandle) await filehandle.close()
+  }
+
+  return gtmString
+}
+
+async function insertGTMCode(filePath) {
+  let filehandle
+  try {
+    const gtmCode = await getGTMCode()
+
+    try {
+      filehandle = await FS.promises.open(filePath, "r+")
+    } catch(err) {
+      filehandle = await FS.promises.open(filePath, "w+")
+    }
+
+    const fileData = await filehandle.readFile("utf8")
+
+    const inserted = fileData.replace(/\<script\s+id\="google-tag-manager"\>\<\/script\>/, gtmCode)
+
+    const { bytesWritten } = await filehandle.write(inserted, 0, "utf8")
+
+    await filehandle.truncate(bytesWritten)
+  } finally {
+    if(filehandle) await filehandle.close()
+  }
+}
+
+FS.readdirSync(buildPath)
+  .forEach(file => file.endsWith(".html") && insertGTMCode(PATH.join(buildPath, file)))

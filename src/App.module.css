@@ -62,48 +62,26 @@
   width: 10%;
 }
 
-.header h2 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.header p {
-  font-size: .8em;
-}
-
-.header button {
-  /* font-size: 1rem; */
-}
-
-.featureHeader {
+.ctaHeader {
   text-align: center;
-  font-size: calc(1rem + 1.7vmin);
+  font-size: 5vw;
   font-weight: bold;
-  margin-bottom: calc(1rem + 1.7vmin);
+  line-height: 1;
+}
+.ctaArrow {
+  text-align: center;
+  font-size: 10vw;
+  line-height: 1;
+  margin-bottom: 1rem;
+  /* font-weight: bold; */
 }
 
-.featureList {
-  margin-bottom: 0;
-}
-
-.featureList dt {
-  font-size: calc(.5rem + 1.1vmin);
-}
-
-.featureList dd {
-  font-size: calc(.5rem + .75vmin);
-}
-
-.largeLeftPad {
-  padding-left: 10vw;
-}
-
-.easyHeader {
+/* .easyHeader {
   font-size: 1.75rem;
   line-height: 2;
   font-weight: normal;
   margin-bottom: 3rem;
-}
+} */
 
 .scheduleBtn {
   font-size: 5vw;
@@ -127,7 +105,15 @@
   }
 } */
 
-@media (min-width: 998px) {
+@media (min-width: 992px) {
+  .ctaHeader {
+    font-size: 2.25rem;
+    font-size: 3.75vw;
+    font-size: min(3.75vw, 3.5rem);
+  }
+  .ctaArrow {
+    font-size: 25vh;
+  }
   .scheduleBtn {
     font-size: 2rem;
     background: #388E3C;

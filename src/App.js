@@ -1,6 +1,6 @@
 import { useRef, useContext, useState, useEffect } from "react"
 import styles from './App.module.css';
-import { AsyncVideoPlayer } from "components/async-video-player"
+// import { AsyncVideoPlayer } from "components/async-video-player"
 import { LoadingDots } from "components/loading-dots"
 // import { SignupForm } from "components/signup-form"
 import { ExecutionContext } from "contexts/execution"
@@ -14,9 +14,9 @@ export function App() {
         [ calendlyEvent, setCalendlyEvent ] = useState({}),
         [ eventScheduled, setEventScheduled ] = useState(/\/event_scheduled/.test(window.location)),
         [ showCalendar, setShowCalender ] = useState(!!eventScheduled),
-        [ boundingRect, setBoundingRect ] = useState(null),
-        isProduction = process.env.NODE_ENV === "production",
-        urlParams = new URLSearchParams(window.location.search)
+        [ boundingRect, setBoundingRect ] = useState(null)
+        // isProduction = process.env.NODE_ENV === "production",
+        // urlParams = new URLSearchParams(window.location.search)
 
   useEffect(() => {
     if(showCalendar && formWrapper.current) {
@@ -24,7 +24,7 @@ export function App() {
     } else {
       setBoundingRect(null)
     }
-  }, [ showCalendar, formWrapper.current ])
+  }, [ showCalendar ])
 
   useEffect(() => {
     if(calendlyEvent.event === "calendly.event_scheduled") {
@@ -73,33 +73,23 @@ export function App() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-lg-5 d-flex flex-column">
-            <header className={`${styles.topHeader} mb-5`}>
+            <header className={styles.topHeader}>
               <img src={logo} alt="MoneyDolly" className={styles.topHeaderLogo} />
             </header>
-            <div className={`ps-lg-5 flex-fill d-flex flex-column justify-content-center`}>
-              {
-                /*
-                  <h5 className={styles.easyHeader}>
-                    FUNDRAISING
-                    <br/>
-                    MADE
-                    <br/>
-                    EASY
-                  </h5>
-                  <p className={styles.description}>
-                    Covid concerns? No problem! Click below to schedule a no risk,
-                    no pressure 10-minute call with Money Dolly, and see how easy
-                    fundraising has just become.
-                  </p>
-                */
-              }
+            <div className="ps-lg-5 flex-fill d-flex flex-column">
+              <h5 className={styles.ctaHeader}>
+                Schedule a Free Call!
+              </h5>
+              <div className={styles.ctaArrow}>
+                &#x2193;
+              </div>
               <div className="row">
                 <div className="col d-flex justify-content-center justify-content-lg-start mb-5">
                   <button
                     className={`${styles.scheduleBtn} flex-lg-fill`}
                     onClick={openCalendarModal}
                   >
-                    Schedule a Call
+                    SCHEDULE A CALL
                   </button>
                 </div>
               </div>
@@ -117,7 +107,7 @@ export function App() {
       </div>
       <div className={`modal ${showCalendar ? "d-block" : "d-none"}`} tabIndex="-1">
         <div className="modal-dialog modal-dialog modal-fullscreen py-5 px-3 p-md-5">
-          <div className="modal-content">
+          <div className="modal-content rounded-3">
             {
               !!showCalendar
               && (
