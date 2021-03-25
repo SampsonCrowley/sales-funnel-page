@@ -15,6 +15,7 @@ export function App() {
         [ eventScheduled, setEventScheduled ] = useState(/\/event_scheduled/.test(window.location)),
         [ showCalendar, setShowCalender ] = useState(!!eventScheduled),
         [ boundingRect, setBoundingRect ] = useState(null)
+  const [clicked, setClicked] = useState(false);
         // isProduction = process.env.NODE_ENV === "production",
         // urlParams = new URLSearchParams(window.location.search)
 
@@ -48,6 +49,16 @@ export function App() {
     */
   }, [ calendlyEvent ])
 
+  useEffect(() => {
+    if (clicked) {
+      // do something meaningful, Promises, if/else, whatever, and then
+      window.location.assign('https://calendly.com/moneydolly_/demo?month=2021-03');
+    }
+  });
+    /*
+    {"event":"calendly.event_scheduled","payload":{"event":{"uri":"https://api.calendly.com/scheduled_events/CDW7YFUUGSM5BOPY"},"invitee":{"uri":"https://api.calendly.com/scheduled_events/CDW7YFUUGSM5BOPY/invitees/GF5NIVWIEUG64SBZ"}}}
+    */
+
   function calendlyEventHandler(ev) {
     setCalendlyEvent(ev.data)
   }
@@ -64,6 +75,7 @@ export function App() {
     setShowCalender(false)
     setEventScheduled(false)
   }
+
 
   return (
     <section
@@ -85,12 +97,13 @@ export function App() {
               </div>
               <div className="row">
                 <div className="col d-flex justify-content-center justify-content-lg-start mb-5">
-                  <button
+                  {/* <button
                     className={`${styles.scheduleBtn} flex-lg-fill`}
                     onClick={openCalendarModal}
                   >
                     SCHEDULE A CALL
-                  </button>
+                  </button> */}
+                  <button className={`${styles.scheduleBtn} flex-lg-fill`} onClick={() => setClicked(true)}>SCHEDULE A CALL</button>
                 </div>
               </div>
 
