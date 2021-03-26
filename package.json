@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "deploy": "./bin/deploy_heroku",
     "build": "react-scripts build",
     "build:html": "./bin/insert_gtm",
     "test": "react-scripts test",
