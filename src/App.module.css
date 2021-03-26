@@ -91,6 +91,13 @@
   padding: 1rem 2rem;
   font-weight: normal;
   border: none;
+  text-decoration: none;
+  text-align: center;
+}
+
+.scheduleBtn:hover {
+  color: white;
+  font-weight: bold;
 }
 
 /* @media (min-width: 768px) {
