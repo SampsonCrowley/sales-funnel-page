@@ -6,8 +6,10 @@ const PATH = require("path")
 const rootPath = PATH.join(__dirname, "../")
 const buildPath = PATH.join(rootPath, "build")
 const gtmPath = PATH.join(buildPath, "gtm.js")
+const autopilotPath = PATH.join(buildPath, "autopilot.js")
 
 let gtmString = ""
+let autopilotString = ""
 
 async function getGTMCode() {
   let filehandle
@@ -24,10 +26,27 @@ async function getGTMCode() {
   return gtmString
 }
 
-async function insertGTMCode(filePath) {
+
+async function getAutopilotCode() {
+  let filehandle
+  if(autopilotString) return autopilotString
+
+  try {
+    filehandle = await FS.promises.open(autopilotPath, "r")
+    const code = await filehandle.readFile("utf8")
+    autopilotString = `<!-- Autopilot Anywhere --><script>${code}</script><!-- End Autopilot Anywhere -->`
+  } finally {
+    if(filehandle) await filehandle.close()
+  }
+
+  return autopilotString
+}
+
+async function insertTrackingCode(filePath) {
   let filehandle
   try {
     const gtmCode = await getGTMCode()
+    const autopilotCode = await getAutopilotCode()
 
     try {
       filehandle = await FS.promises.open(filePath, "r+")
@@ -38,6 +57,7 @@ async function insertGTMCode(filePath) {
     const fileData = await filehandle.readFile("utf8")
 
     const inserted = fileData.replace(/\<script\s+id\="google-tag-manager"\>\<\/script\>/, gtmCode)
+                             .replace(/\<script\s+id\="autopilot-anywhere"\>\<\/script\>/, autopilotCode)
 
     const { bytesWritten } = await filehandle.write(inserted, 0, "utf8")
 
@@ -48,4 +68,4 @@ async function insertGTMCode(filePath) {
 }
 
 FS.readdirSync(buildPath)
-  .forEach(file => file.endsWith(".html") && insertGTMCode(PATH.join(buildPath, file)))
+  .forEach(file => file.endsWith(".html") && insertTrackingCode(PATH.join(buildPath, file)))

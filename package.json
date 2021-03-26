@@ -22,7 +22,7 @@
     "start": "react-scripts start",
     "deploy": "./bin/deploy_heroku",
     "build": "react-scripts build",
-    "build:html": "./bin/insert_gtm",
+    "build:html": "./bin/insert_tracking",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postbuild": "react-snap",
